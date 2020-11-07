@@ -2,6 +2,7 @@
 
 namespace FreeElephants\StaticHttpClient;
 
+use FreeElephants\StaticHttpClient\PathResolver\Exception\UnresolvablePathException;
 use FreeElephants\StaticHttpClient\PathResolver\PathResolverInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
@@ -22,11 +23,20 @@ class StaticHttpClient implements ClientInterface
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $responsePath = $this->resolver->resolve($request);
-        $responseBodyContent = file_get_contents($responsePath);
-        $response = $this->responseFactory->createResponse(200);
+        $status = 200;
+        $responseBodyContent = '';
+
+        try {
+            $responsePath = $this->resolver->resolve($request);
+            $responseBodyContent = file_get_contents($responsePath);
+        } catch (UnresolvablePathException $exception) {
+            $status = 404;
+        }
+
+        $response = $this->responseFactory->createResponse($status);
         $response->getBody()->write($responseBodyContent);
         $response->getBody()->rewind();
+
         return $response;
     }
 }
