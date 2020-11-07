@@ -2,6 +2,7 @@
 
 namespace FreeElephants\StaticHttpClient;
 
+use FreeElephants\StaticHttpClient\PathResolver\PathResolverInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseFactoryInterface;
@@ -11,19 +12,17 @@ class StaticHttpClient implements ClientInterface
 {
 
     private ResponseFactoryInterface $responseFactory;
-    private string $fixturePath;
+    private PathResolverInterface $resolver;
 
-    public function __construct(ResponseFactoryInterface $responseFactory, string $fixturePath)
+    public function __construct(ResponseFactoryInterface $responseFactory, PathResolverInterface $resolver)
     {
         $this->responseFactory = $responseFactory;
-        $this->fixturePath = $fixturePath;
+        $this->resolver = $resolver;
     }
 
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
-        $host = $request->getUri()->getHost();
-        $path = $request->getUri()->getPath();
-        $responsePath = $this->fixturePath . DIRECTORY_SEPARATOR . $host . $path;
+        $responsePath = $this->resolver->resolve($request);
         $responseBodyContent = file_get_contents($responsePath);
         $response = $this->responseFactory->createResponse(200);
         $response->getBody()->write($responseBodyContent);
