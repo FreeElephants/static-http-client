@@ -5,6 +5,9 @@ namespace FreeElephants\StaticHttpClient\PathResolver;
 use FreeElephants\StaticHttpClient\PathResolver\Exception\UnresolvablePathException;
 use Psr\Http\Message\RequestInterface;
 
+/**
+ * Find a given request path in directory with same name of host.
+ */
 class HostnameAwareResolver implements PathResolverInterface
 {
 
@@ -20,7 +23,7 @@ class HostnameAwareResolver implements PathResolverInterface
         $host = $request->getUri()->getHost();
         $path = $request->getUri()->getPath();
         $filename = $this->basePath . DIRECTORY_SEPARATOR . $host . $path;
-        if(file_exists($filename)) {
+        if (file_exists($filename)) {
             return $filename;
         }
 
