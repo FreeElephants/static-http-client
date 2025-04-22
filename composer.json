@@ -11,6 +11,9 @@
         "helmich/phpunit-psr7-assert": "^4.2",
         "nyholm/psr7": "^1.3"
     },
+    "suggest": {
+        "nyholm/psr7": "*"
+    },
     "license": "BSD-3-Clause",
     "authors": [
         {
@@ -31,5 +34,8 @@
                 "tests/FreeElephants/StaticHttpClient"
             ]
         }
+    },
+    "config": {
+        "sort-packages": true
     }
 }

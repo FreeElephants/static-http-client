@@ -13,7 +13,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Composer requirements end
 
 # Xdebug begin
-RUN pecl install xdebug \
+RUN pecl install xdebug-3.1.6 \
     && docker-php-ext-enable xdebug
 
 # Xdebug end
