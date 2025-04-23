@@ -19,10 +19,10 @@ public function test()
         $responseFactory, 
         new \FreeElephants\StaticHttpClient\PathResolver\PathBuilderBasedResolver(
             new \FreeElephants\StaticHttpClient\PathBuilder\Composite(
-                new \FreeElephants\StaticHttpClient\PathBuilder\BasePath(__DIR__),
-                new \FreeElephants\StaticHttpClient\PathBuilder\HostnameAsDirectory(),
+                new \FreeElephants\StaticHttpClient\PathBuilder\PrependBasePath(__DIR__),
+                new \FreeElephants\StaticHttpClient\PathBuilder\PrependHostnameAsDirectory(),
                 new \FreeElephants\StaticHttpClient\PathBuilder\AppendRequestPath(),
-                new \FreeElephants\StaticHttpClient\PathBuilder\DefaultFileExtension('.json'),
+                new \FreeElephants\StaticHttpClient\PathBuilder\AppendDefaultFileExtension('.json'),
             ) 
         )
     );

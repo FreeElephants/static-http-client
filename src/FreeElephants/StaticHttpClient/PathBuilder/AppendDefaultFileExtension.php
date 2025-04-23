@@ -4,7 +4,7 @@ namespace FreeElephants\StaticHttpClient\PathBuilder;
 
 use Psr\Http\Message\RequestInterface;
 
-class DefaultFileExtension implements PathBuilderInterface
+class AppendDefaultFileExtension implements PathBuilderInterface
 {
 
     private string $fileExtension;

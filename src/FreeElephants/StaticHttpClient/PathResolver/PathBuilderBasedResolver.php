@@ -19,6 +19,7 @@ class PathBuilderBasedResolver implements PathResolverInterface
     {
         $filename = $this->pathBuilder->build($request);
 
+        var_dump($filename);
         if (file_exists($filename)) {
             return $filename;
         }

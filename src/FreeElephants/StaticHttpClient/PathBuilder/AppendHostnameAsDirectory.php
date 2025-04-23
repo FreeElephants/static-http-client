@@ -4,11 +4,11 @@ namespace FreeElephants\StaticHttpClient\PathBuilder;
 
 use Psr\Http\Message\RequestInterface;
 
-class HostnameAsDirectory implements PathBuilderInterface
+class AppendHostnameAsDirectory implements PathBuilderInterface
 {
     public function build(RequestInterface $request, string $path = ''): string
     {
-        return $request->getUri()->getHost() . $path;
+        return $path . DIRECTORY_SEPARATOR . $request->getUri()->getHost();
     }
 
 }
