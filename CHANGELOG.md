@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3] - 2025-04-26
+
+### Added
+- Prepend / Append composition for handy path parts
+
 ## [0.0.2] - 2025-04-22
 
 ### Added
@@ -16,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - StaticHttpClient, HostnameAwareResolver classes
 
-[Unreleased]: https://github.com/FreeElephants/static-http-client/compare/0.0.2...HEAD
+[Unreleased]: https://github.com/FreeElephants/static-http-client/compare/0.0.3...HEAD
+[0.0.3]: https://github.com/FreeElephants/static-http-client/releases/tag/0.0.3
 [0.0.2]: https://github.com/FreeElephants/static-http-client/releases/tag/0.0.2
 [0.0.1]: https://github.com/FreeElephants/static-http-client/releases/tag/0.0.1
