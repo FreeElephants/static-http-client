@@ -4,10 +4,11 @@ namespace FreeElephants\StaticHttpClient\PathResolver;
 
 use FreeElephants\StaticHttpClient\AbstractTestCase;
 use FreeElephants\StaticHttpClient\PathBuilder\AppendRequestPath;
-use FreeElephants\StaticHttpClient\PathBuilder\BasePath;
+use FreeElephants\StaticHttpClient\PathBuilder\PrependBasePath;
 use FreeElephants\StaticHttpClient\PathBuilder\Composite;
-use FreeElephants\StaticHttpClient\PathBuilder\DefaultFileExtension;
+use FreeElephants\StaticHttpClient\PathBuilder\AppendDefaultFileExtension;
 use FreeElephants\StaticHttpClient\PathBuilder\PathBuilderInterface;
+use FreeElephants\StaticHttpClient\PathBuilder\PrependHostnameAsDirectory;
 use FreeElephants\StaticHttpClient\PathResolver\Exception\UnresolvablePathException;
 use Nyholm\Psr7\Request;
 use PHPUnit\Framework\TestCase;
@@ -18,14 +19,15 @@ class PathBuilderBasedResolverTest extends AbstractTestCase
     {
         $pathBuilderBasedResolver = new PathBuilderBasedResolver(
             new Composite(
-                new BasePath(self::FIXTURE_PATH),
                 new AppendRequestPath(),
-                new DefaultFileExtension()
+                new PrependHostnameAsDirectory(),
+                new PrependBasePath(self::FIXTURE_PATH),
+                new AppendDefaultFileExtension('.html')
             )
         );
 
-        $actual = $pathBuilderBasedResolver->resolve(new Request('GET', 'http://example.com/foo'));
-        $this->assertSame(self::FIXTURE_PATH . DIRECTORY_SEPARATOR . 'foo.json', $actual);
+        $actual = $pathBuilderBasedResolver->resolve(new Request('GET', 'http://example.com/bar'));
+        $this->assertSame(self::FIXTURE_PATH . '/example.com/bar.html', $actual);
     }
 
     public function testUnresolvedException(): void
@@ -33,6 +35,6 @@ class PathBuilderBasedResolverTest extends AbstractTestCase
         $pathBuilderBasedResolver = new PathBuilderBasedResolver($this->createMock(PathBuilderInterface::class));;
 
         $this->expectException(UnresolvablePathException::class);
-        $pathBuilderBasedResolver->resolve(new Request('GET', 'http://example.com/foo'));
+        $pathBuilderBasedResolver->resolve(new Request('GET', 'http://example.com/bar'));
     }
 }

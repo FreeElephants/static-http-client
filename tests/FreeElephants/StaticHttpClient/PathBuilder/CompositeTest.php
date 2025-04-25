@@ -12,12 +12,13 @@ class CompositeTest extends AbstractTestCase
     {
         $composite = new Composite(
             new AppendRequestPath(),
-            new DefaultFileExtension(),
-            new HostnameAsDirectory(),
+            new PrependHostnameAsDirectory(),
+            new PrependBasePath('/root'),
+            new AppendDefaultFileExtension(),
         );
 
         $path = $composite->build(new Request('GET', 'http://example.com/foo'));
 
-        $this->assertSame('example.com/foo.json', $path, 'Composite should build path from all builders');
+        $this->assertSame('/root/example.com/foo.json', $path, 'Composite should build path from all builders');
     }
 }
