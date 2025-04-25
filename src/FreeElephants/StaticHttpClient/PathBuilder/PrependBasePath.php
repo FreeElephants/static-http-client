@@ -10,11 +10,11 @@ class PrependBasePath implements PathBuilderInterface
 
     public function __construct(string $basePath)
     {
-        $this->basePath = $basePath;
+        $this->basePath = rtrim($basePath, DIRECTORY_SEPARATOR);
     }
 
     public function build(RequestInterface $request, string $path = ''): string
     {
-        return $this->basePath . $path;
+        return $this->basePath . DIRECTORY_SEPARATOR . ltrim($path, DIRECTORY_SEPARATOR);
     }
 }

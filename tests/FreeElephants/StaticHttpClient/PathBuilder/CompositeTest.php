@@ -11,9 +11,9 @@ class CompositeTest extends AbstractTestCase
     public function testBuild(): void
     {
         $composite = new Composite(
-            new PrependBasePath('/root'),
-            new AppendHostnameAsDirectory(),
             new AppendRequestPath(),
+            new PrependHostnameAsDirectory(),
+            new PrependBasePath('/root'),
             new AppendDefaultFileExtension(),
         );
 

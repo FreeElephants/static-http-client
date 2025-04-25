@@ -19,9 +19,9 @@ class PathBuilderBasedResolverTest extends AbstractTestCase
     {
         $pathBuilderBasedResolver = new PathBuilderBasedResolver(
             new Composite(
-                new PrependBasePath(self::FIXTURE_PATH),
-                new PrependHostnameAsDirectory(),
                 new AppendRequestPath(),
+                new PrependHostnameAsDirectory(),
+                new PrependBasePath(self::FIXTURE_PATH),
                 new AppendDefaultFileExtension('.html')
             )
         );
